@@ -59,5 +59,5 @@ if __name__ == '__main__':
     memory.expert_data_ratio = 0
     agent.train(env=env, memory=memory, episodes=1000,
                 batch_size=batch_size, updates_per_step=updates_per_step,
-                summary_writer_name=f"live_train_phase_2_{task_no_spaces}",
+                summary_writer_name=f"live_train_phase_3_{task_no_spaces}",
                 max_epsiode_steps=max_episode_steps)

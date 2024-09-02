@@ -27,6 +27,7 @@ class Agent(object):
         self.critic_optim = Adam(self.critic.parameters(), lr=learning_rate)
 
         self.critic_target = Critic(num_inputs, action_space.shape[0], hidden_size, name=f"critic_target_{goal}").to(self.device)
+        self.hard_update(self.critic_target, self.critic)
 
         self.policy = Policy(num_inputs, action_space.shape[0], hidden_size, action_space, name=f"policy_{goal}").to(self.device)
         self.policy_optim = Adam(self.policy.parameters(), lr=learning_rate)
@@ -91,6 +92,10 @@ class Agent(object):
         return qf1_loss.item(), qf2_loss.item(), policy_loss.item(), alpha_loss.item(), alpha_tlogs.item()
     
 
+    def hard_update(self, target, source):
+        for target_param, param in zip(target.parameters(), source.parameters()):
+            target_param.data.copy_(param.data)
+
     def soft_update(self, target, source):
         for target_param, param in zip(target.parameters(), source.parameters()):
             target_param.data.copy_(target_param.data * (1.0 - self.tau) + param.data * self.tau)
@@ -154,7 +159,10 @@ class Agent(object):
             episode_steps = 0
             done = False
 
-            state, _ = env.reset()
+            if prev_action is not None:
+                state, reward, done, _, _ = env.step(prev_action)
+            else:
+                state, _ = env.reset()
 
             while not done and episode_steps < max_episode_steps:
                 action = self.select_action(state, evaluate=True)

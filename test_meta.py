@@ -21,7 +21,7 @@ if __name__ == '__main__':
     hidden_size = 512
     learning_rate = 0.0001
     batch_size = 64
-    live_test = False
+    live_test = True
     generate_score = True
 
     if live_test:

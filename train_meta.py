@@ -19,7 +19,7 @@ if __name__ == '__main__':
     target_update_interval = 1
     updates_per_step = 4
     hidden_size = 512
-    learning_rate = 0.0001
+    learning_rate = 0.00005
     batch_size = 64
     episodes = 3000
 

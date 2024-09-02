@@ -142,14 +142,14 @@ class MetaAgent(object):
 
                     state = next_state
 
-                episode_reward = episode_reward / num_samples
+            episode_reward = episode_reward / num_samples
 
-                writer.add_scalar('reward/train', episode_reward, episode)
-                writer.add_scalar('reward/episode_steps', episode_steps, episode)
-                print("Episode: {}, Episode steps: {}, reward: {}".format(episode, episode_steps, episode_reward))
+            writer.add_scalar('reward/train', episode_reward, episode)
+            writer.add_scalar('reward/episode_steps', episode_steps, episode)
+            print("Episode: {}, Episode steps: {}, reward: {}".format(episode, episode_steps, episode_reward))
 
-                if episode % 10 == 0:
-                    self.save_models()
+            if episode % 10 == 0:
+                self.save_models()
 
 
     
